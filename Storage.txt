@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_STACK_SIZE 100
+
+typedef struct {
+    char name[20];
+    int size;
+    int address;
+} StackFrame;
+
+StackFrame stack[MAX_STACK_SIZE];
+int top = -1;
+int current_address = 1000; // assume stack starts at address 1000
+
+void push(char* name, int size) {
+    if (top >= MAX_STACK_SIZE - 1) {
+        printf("Stack overflow! Cannot allocate memory for %s\n", name);
+        return;
+    }
+    top++;
+    strcpy(stack[top].name, name);
+    stack[top].size = size;
+    stack[top].address = current_address;
+    current_address += size;
+    printf("Allocated %d bytes for '%s' at address %d\n", size, name, stack[top].address);
+}
+
+void pop() {
+    if (top < 0) {
+        printf("Stack underflow! Nothing to pop.\n");
+        return;
+    }
+    printf("Deallocating '%s' of size %d from address %d\n",
+           stack[top].name, stack[top].size, stack[top].address);
+    current_address -= stack[top].size;
+    top--;
+}
+
+void displayStack() {
+    printf("\nCurrent Stack State:\n");
+    if (top < 0) {
+        printf(" Stack is empty.\n");
+        return;
+    }
+    for (int i = top; i >= 0; i--) {
+        printf(" %s | size: %d | address: %d\n",
+               stack[i].name, stack[i].size, stack[i].address);
+    }
+    printf("\n");
+}
+
+int main() {
+    push("A", 4);
+    push("Sum", 8);
+    push("temp", 4);
+    displayStack();
+
+    pop();
+    push("result", 4);
+    displayStack();
+
+    return 0;
+}
