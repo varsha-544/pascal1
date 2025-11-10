@@ -62,4 +62,23 @@ int main() {
     displayStack();
 
     return 0;
-}
+} 
+
+
+OUTPUT:
+Allocated 4 bytes for 'A' at address 1000
+Allocated 8 bytes for 'Sum' at address 1004
+Allocated 4 bytes for 'temp' at address 1012
+
+Current Stack State:
+ temp | size: 4 | address: 1012
+ Sum  | size: 8 | address: 1004
+ A    | size: 4 | address: 1000
+
+Deallocating 'temp' of size 4 from address 1012
+Allocated 4 bytes for 'result' at address 1012
+
+Current Stack State:
+ result | size: 4 | address: 1012
+ Sum    | size: 8 | address: 1004
+ A      | size: 4 | address: 1000
